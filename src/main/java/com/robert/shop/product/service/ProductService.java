@@ -3,9 +3,9 @@ package com.robert.shop.product.service;
 import com.robert.shop.product.model.Product;
 import com.robert.shop.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -13,8 +13,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public Page<Product> getProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
 }
