@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class AdminProductController {
@@ -26,12 +28,12 @@ public class AdminProductController {
     }
 
     @PostMapping("/admin/products")
-    public AdminProduct createProduct(@RequestBody AdminProductDTO adminProductDTO) {
+    public AdminProduct createProduct(@Valid @RequestBody AdminProductDTO adminProductDTO) {
         return adminProductService.createProduct(mapAdminProduct(adminProductDTO, EMPTY_ID));
     }
 
     @PutMapping("/admin/products/{id}")
-    public AdminProduct updateProduct(@RequestBody AdminProductDTO adminProductDTO, @PathVariable Long id) {
+    public AdminProduct updateProduct(@Valid @RequestBody AdminProductDTO adminProductDTO, @PathVariable Long id) {
         return adminProductService.updateProduct(mapAdminProduct(adminProductDTO, id));
     }
 
