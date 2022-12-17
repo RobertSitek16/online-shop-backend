@@ -28,4 +28,8 @@ public class AdminProductService {
     public AdminProduct updateProduct(AdminProduct adminProduct) {
         return adminProductRepository.save(adminProduct);
     }
+
+    public void deleteProduct(Long id) {
+        adminProductRepository.deleteById(id);
+    }
 }
