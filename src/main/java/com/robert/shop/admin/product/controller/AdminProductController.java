@@ -1,5 +1,6 @@
 package com.robert.shop.admin.product.controller;
 
+import com.github.slugify.Slugify;
 import com.robert.shop.admin.product.dto.AdminProductDTO;
 import com.robert.shop.admin.product.dto.UploadResponse;
 import com.robert.shop.admin.product.model.AdminProduct;
@@ -80,7 +81,14 @@ public class AdminProductController {
                 .price(adminProductDTO.getPrice())
                 .currency(adminProductDTO.getCurrency())
                 .image(adminProductDTO.getImage())
+                .slug(slugifySlug(adminProductDTO.getSlug()))
                 .build();
+    }
+
+    private String slugifySlug(String slug) {
+        Slugify slugify = new Slugify();
+        return slugify.withCustomReplacement("_", "-")
+                .slugify(slug);
     }
 
 }
