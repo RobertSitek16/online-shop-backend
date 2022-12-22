@@ -78,6 +78,7 @@ public class AdminProductController {
                 .name(adminProductDTO.getName())
                 .category(adminProductDTO.getCategory())
                 .description(adminProductDTO.getDescription())
+                .fullDescription(adminProductDTO.getFullDescription())
                 .price(adminProductDTO.getPrice())
                 .currency(adminProductDTO.getCurrency())
                 .image(adminProductDTO.getImage())
