@@ -76,7 +76,7 @@ public class AdminProductController {
         return AdminProduct.builder()
                 .id(id)
                 .name(adminProductDTO.getName())
-                .category(adminProductDTO.getCategory())
+                .categoryId(adminProductDTO.getCategoryId())
                 .description(adminProductDTO.getDescription())
                 .fullDescription(adminProductDTO.getFullDescription())
                 .price(adminProductDTO.getPrice())
