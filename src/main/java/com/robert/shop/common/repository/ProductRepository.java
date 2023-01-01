@@ -1,6 +1,6 @@
-package com.robert.shop.product.repository;
+package com.robert.shop.common.repository;
 
-import com.robert.shop.product.model.Product;
+import com.robert.shop.common.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

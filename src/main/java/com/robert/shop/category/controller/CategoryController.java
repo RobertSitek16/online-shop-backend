@@ -1,7 +1,7 @@
 package com.robert.shop.category.controller;
 
 import com.robert.shop.category.dto.CategoryProductsDto;
-import com.robert.shop.category.model.Category;
+import com.robert.shop.common.model.Category;
 import com.robert.shop.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
