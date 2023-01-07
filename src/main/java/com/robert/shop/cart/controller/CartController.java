@@ -7,6 +7,8 @@ import com.robert.shop.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/carts")
 @RequiredArgsConstructor
@@ -22,6 +24,11 @@ public class CartController {
     @PutMapping("/{id}")
     public CartSummaryDto addProductToCart(@PathVariable Long id, @RequestBody CartProductDto cartProductDto) {
         return CartMapper.mapToCartSummary(cartService.addProductToCart(id, cartProductDto));
+    }
+
+    @PutMapping("/{id}/update")
+    public CartSummaryDto updateCart(@PathVariable Long id, @RequestBody List<CartProductDto> cartProductDtoList) {
+        return CartMapper.mapToCartSummary(cartService.updateCart(id, cartProductDtoList));
     }
 
 }
