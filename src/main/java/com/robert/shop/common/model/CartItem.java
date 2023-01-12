@@ -1,4 +1,4 @@
-package com.robert.shop.cart.model;
+package com.robert.shop.common.model;
 
 import com.robert.shop.common.model.Product;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.robert.shop.cart.repository;
+package com.robert.shop.common.repository;
 
-import com.robert.shop.cart.model.Cart;
+import com.robert.shop.common.model.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +10,10 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByCreatedLessThan(LocalDateTime minusDays);
+
+    @Query("delete from Cart c where c.id=:id")
+    @Modifying
+    void deleteCartById(Long id);
 
     @Query("delete from Cart c where c.id in (:ids)")
     @Modifying

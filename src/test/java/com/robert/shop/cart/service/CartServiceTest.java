@@ -1,8 +1,8 @@
 package com.robert.shop.cart.service;
 
 import com.robert.shop.cart.dto.CartProductDto;
-import com.robert.shop.cart.model.Cart;
-import com.robert.shop.cart.repository.CartRepository;
+import com.robert.shop.common.model.Cart;
+import com.robert.shop.common.repository.CartRepository;
 import com.robert.shop.common.model.Product;
 import com.robert.shop.common.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
