@@ -9,9 +9,11 @@ import com.robert.shop.order.dto.OrderSummary;
 import com.robert.shop.order.model.Order;
 import com.robert.shop.order.model.OrderRow;
 import com.robert.shop.order.model.OrderStatus;
+import com.robert.shop.order.model.Payment;
 import com.robert.shop.order.model.Shipment;
 import com.robert.shop.order.repository.OrderRepository;
 import com.robert.shop.order.repository.OrderRowRepository;
+import com.robert.shop.order.repository.PaymentRepository;
 import com.robert.shop.order.repository.ShipmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,11 +32,13 @@ public class OrderService {
     private final OrderRowRepository orderRowRepository;
     private final CartItemRepository cartItemRepository;
     private final ShipmentRepository shipmentRepository;
+    private final PaymentRepository paymentRepository;
 
     @Transactional
     public OrderSummary placeOrder(OrderDto orderDto) {
         Cart cart = cartRepository.findById(orderDto.getCartId()).orElseThrow();
         Shipment shipment = shipmentRepository.findById(orderDto.getShipmentId()).orElseThrow();
+        Payment payment = paymentRepository.findById(orderDto.getPaymentId()).orElseThrow();
         Order order = Order.builder()
                 .firstname(orderDto.getFirstname())
                 .lastname(orderDto.getLastname())
@@ -46,6 +50,7 @@ public class OrderService {
                 .placeDate(LocalDateTime.now())
                 .orderStatus(OrderStatus.NEW)
                 .grossValue(calculateGrossValue(cart.getItems(), shipment))
+                .payment(payment)
                 .build();
         Order newOrder = orderRepository.save(order);
         saveOrderRows(cart, newOrder.getId(), shipment);
@@ -58,6 +63,7 @@ public class OrderService {
                 .placeDate(newOrder.getPlaceDate())
                 .status(newOrder.getOrderStatus())
                 .grossValue(newOrder.getGrossValue())
+                .payment(payment)
                 .build();
     }
 
