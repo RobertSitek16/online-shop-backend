@@ -1,5 +1,6 @@
 package com.robert.shop.order.service;
 
+import com.robert.shop.common.mail.EmailClientService;
 import com.robert.shop.common.model.Cart;
 import com.robert.shop.common.model.CartItem;
 import com.robert.shop.common.repository.CartItemRepository;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -33,6 +35,7 @@ public class OrderService {
     private final CartItemRepository cartItemRepository;
     private final ShipmentRepository shipmentRepository;
     private final PaymentRepository paymentRepository;
+    private final EmailClientService emailClientService;
 
     @Transactional
     public OrderSummary placeOrder(OrderDto orderDto) {
@@ -57,6 +60,7 @@ public class OrderService {
 
         cartItemRepository.deleteByCartId(orderDto.getCartId());
         cartRepository.deleteCartById(orderDto.getCartId());
+        emailClientService.getInstance().send(order.getEmail(), "We have received your order", createEmailMessage(order));
 
         return OrderSummary.builder()
                 .id(newOrder.getId())
@@ -65,6 +69,16 @@ public class OrderService {
                 .grossValue(newOrder.getGrossValue())
                 .payment(payment)
                 .build();
+    }
+
+    private String createEmailMessage(Order order) {
+        return "\nYour order with id: " + order.getId() +
+                "\nDate of order: " + order.getPlaceDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
+                "\nValue: " + order.getGrossValue() +
+                "\n" +
+                "\nPayment: " + order.getPayment().getName() +
+                (order.getPayment().getNote() != null ? "\n" + order.getPayment().getNote() : "") +
+                "\n\nThank you for the purchase!";
     }
 
     private BigDecimal calculateGrossValue(List<CartItem> items, Shipment shipment) {
