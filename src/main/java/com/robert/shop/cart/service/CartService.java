@@ -3,8 +3,8 @@ package com.robert.shop.cart.service;
 import com.robert.shop.cart.dto.CartProductDto;
 import com.robert.shop.common.model.Cart;
 import com.robert.shop.common.model.CartItem;
-import com.robert.shop.common.repository.CartRepository;
 import com.robert.shop.common.model.Product;
+import com.robert.shop.common.repository.CartRepository;
 import com.robert.shop.common.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,9 +42,13 @@ public class CartService {
 
     private Cart getInitializedCart(Long id) {
         if (id == null || id <= 0) {
-            return cartRepository.save(Cart.builder().created(now()).build());
+            return saveNewCart();
         }
-        return cartRepository.findById(id).orElseThrow();
+        return cartRepository.findById(id).orElseGet(this::saveNewCart);
+    }
+
+    private Cart saveNewCart() {
+        return cartRepository.save(Cart.builder().created(now()).build());
     }
 
     @Transactional
