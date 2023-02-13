@@ -1,5 +1,6 @@
 package com.robert.shop.order.model;
 
+import com.robert.shop.common.model.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

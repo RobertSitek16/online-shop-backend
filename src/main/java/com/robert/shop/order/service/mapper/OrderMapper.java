@@ -6,7 +6,7 @@ import com.robert.shop.order.dto.OrderDto;
 import com.robert.shop.order.dto.OrderSummary;
 import com.robert.shop.order.model.Order;
 import com.robert.shop.order.model.OrderRow;
-import com.robert.shop.order.model.OrderStatus;
+import com.robert.shop.common.model.OrderStatus;
 import com.robert.shop.order.model.Payment;
 import com.robert.shop.order.model.Shipment;
 

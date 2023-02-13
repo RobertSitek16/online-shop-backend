@@ -1,5 +1,6 @@
 package com.robert.shop.admin.order.model;
 
+import com.robert.shop.common.model.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +28,7 @@ public class AdminOrder {
     private Long id;
     private LocalDateTime placeDate;
     @Enumerated(EnumType.STRING)
-    private AdminOrderStatus orderStatus;
+    private OrderStatus orderStatus;
     @OneToMany
     @JoinColumn(name = "orderId")
     private List<AdminOrderRow> orderRows;

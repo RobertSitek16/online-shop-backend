@@ -1,10 +1,10 @@
 package com.robert.shop.admin.order.service;
 
-import com.robert.shop.admin.order.model.AdminOrderStatus;
+import com.robert.shop.common.model.OrderStatus;
 
 public class AdminOrderEmailMessageService {
 
-    public static String createProcessingEmailSubject(Long id, AdminOrderStatus newStatus) {
+    public static String createProcessingEmailSubject(Long id, OrderStatus newStatus) {
         return String.format("Order %s changed status to: %s", id, newStatus);
     }
 
@@ -16,7 +16,7 @@ public class AdminOrderEmailMessageService {
         return String.format("The order %s has been refunded", id);
     }
 
-    public static String createProcessingEmailMessage(Long id, AdminOrderStatus newStatus) {
+    public static String createProcessingEmailMessage(Long id, OrderStatus newStatus) {
         return "Your order: " + id + " is processing." +
                 "\nStatus has been changed to: " + newStatus +
                 "\nAfter completing the order, we will forward it for shipment." +
@@ -24,7 +24,7 @@ public class AdminOrderEmailMessageService {
                 "\nYour best shop";
     }
 
-    public static String createCompletedEmailMessage(Long id, AdminOrderStatus newStatus) {
+    public static String createCompletedEmailMessage(Long id, OrderStatus newStatus) {
         return "Your order: " + id + " has been completed." +
                 "\nStatus has been changed to: " + newStatus +
                 "\nThank you for your purchase and we look forward to seeing you again." +
@@ -32,7 +32,7 @@ public class AdminOrderEmailMessageService {
                 "\nYour best shop";
     }
 
-    public static String createRefundEmailMessage(Long id, AdminOrderStatus newStatus) {
+    public static String createRefundEmailMessage(Long id, OrderStatus newStatus) {
         return "Your order: " + id + " has been refunded." +
                 "\nStatus has been changed to: " + newStatus +
                 "\n\nGreetings," +

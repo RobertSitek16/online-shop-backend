@@ -2,9 +2,9 @@ package com.robert.shop.admin.order.service;
 
 import com.robert.shop.admin.order.model.AdminOrder;
 import com.robert.shop.admin.order.model.AdminOrderLog;
-import com.robert.shop.admin.order.model.AdminOrderStatus;
 import com.robert.shop.admin.order.repository.AdminOrderLogRepository;
 import com.robert.shop.admin.order.repository.AdminOrderRepository;
+import com.robert.shop.common.model.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -50,8 +50,8 @@ public class AdminOrderService {
     }
 
     private void processOrderStatusChange(AdminOrder adminOrder, Map<String, String> values) {
-        AdminOrderStatus oldStatus = adminOrder.getOrderStatus();
-        AdminOrderStatus newStatus = AdminOrderStatus.valueOf(values.get("orderStatus"));
+        OrderStatus oldStatus = adminOrder.getOrderStatus();
+        OrderStatus newStatus = OrderStatus.valueOf(values.get("orderStatus"));
         if (oldStatus == newStatus) {
             return;
         }
@@ -60,7 +60,7 @@ public class AdminOrderService {
         emailNotificationStatusChangeService.sendEmailNotification(newStatus, adminOrder);
     }
 
-    private void logStatusChange(Long orderId, AdminOrderStatus oldStatus, AdminOrderStatus newStatus) {
+    private void logStatusChange(Long orderId, OrderStatus oldStatus, OrderStatus newStatus) {
         adminOrderLogRepository.save(AdminOrderLog.builder()
                 .created(LocalDateTime.now())
                 .orderId(orderId)

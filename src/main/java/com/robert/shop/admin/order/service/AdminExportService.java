@@ -1,8 +1,8 @@
 package com.robert.shop.admin.order.service;
 
 import com.robert.shop.admin.order.model.AdminOrder;
-import com.robert.shop.admin.order.model.AdminOrderStatus;
 import com.robert.shop.admin.order.repository.AdminOrderRepository;
+import com.robert.shop.common.model.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class AdminExportService {
 
     private final AdminOrderRepository adminOrderRepository;
 
-    public List<AdminOrder> exportOrders(LocalDateTime from, LocalDateTime to, AdminOrderStatus orderStatus) {
+    public List<AdminOrder> exportOrders(LocalDateTime from, LocalDateTime to, OrderStatus orderStatus) {
         return adminOrderRepository.findAllByPlaceDateIsBetweenAndOrderStatus(from, to, orderStatus);
     }
 }

@@ -5,6 +5,7 @@ import com.robert.shop.common.model.Cart;
 import com.robert.shop.common.repository.CartItemRepository;
 import com.robert.shop.common.repository.CartRepository;
 import com.robert.shop.order.dto.OrderDto;
+import com.robert.shop.order.dto.OrderListDto;
 import com.robert.shop.order.dto.OrderSummary;
 import com.robert.shop.order.model.Order;
 import com.robert.shop.order.model.OrderRow;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.robert.shop.order.service.mapper.OrderDtoMapper.mapToOrderListDto;
 import static com.robert.shop.order.service.mapper.OrderEmailMessageMapper.createEmailMessage;
 import static com.robert.shop.order.service.mapper.OrderMapper.createNewOrder;
 import static com.robert.shop.order.service.mapper.OrderMapper.createOrderSummary;
@@ -76,6 +78,10 @@ public class OrderService {
                 .map(cartItem -> mapToOrderRowWithQuantity(orderId, cartItem))
                 .peek(orderRowRepository::save)
                 .toList();
+    }
+
+    public List<OrderListDto> getOrdersForCustomer(Long userId) {
+        return mapToOrderListDto(orderRepository.findByUserId(userId));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.robert.shop.admin.order.controller.dto;
 
-import com.robert.shop.admin.order.model.AdminOrderStatus;
+import com.robert.shop.common.model.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class AdminOrderDto {
     private Long id;
     private LocalDateTime placeDate;
-    private AdminOrderStatus orderStatus;
+    private OrderStatus orderStatus;
     private BigDecimal grossValue;
 }

@@ -1,6 +1,6 @@
-package com.robert.shop.admin.order.model;
+package com.robert.shop.common.model;
 
-public enum AdminOrderStatus {
+public enum OrderStatus {
     NEW,
     PAID,
     PROCESSING,
@@ -8,5 +8,4 @@ public enum AdminOrderStatus {
     COMPLETED,
     CANCELED,
     REFUND
-
 }
