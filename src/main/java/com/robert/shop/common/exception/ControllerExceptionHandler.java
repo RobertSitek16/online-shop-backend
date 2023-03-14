@@ -16,8 +16,36 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessage objectNotFoundException(ObjectNotFoundException ex, WebRequest request) {
-        return new ErrorMessage(
+        return errorMessage(
                 HttpStatus.NOT_FOUND.value(),
+                ex,
+                request
+        );
+    }
+
+    @ExceptionHandler(ObjectNotIdenticalException.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ErrorMessage objectNotIdenticalException(ObjectNotIdenticalException ex, WebRequest request) {
+        return errorMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                ex,
+                request
+        );
+    }
+
+    @ExceptionHandler(LinkExpiredException.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ErrorMessage linkExpiredException(LinkExpiredException ex, WebRequest request) {
+        return errorMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
+                ex,
+                request
+        );
+    }
+
+    private ErrorMessage errorMessage(int statusCode, RuntimeException ex, WebRequest request) {
+        return new ErrorMessage(
+                statusCode,
                 LocalDateTime.now(),
                 ex.getMessage(),
                 request.getDescription(false)
