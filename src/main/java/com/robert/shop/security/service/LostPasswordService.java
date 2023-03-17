@@ -25,7 +25,7 @@ public class LostPasswordService {
     private final UserRepository userRepository;
     private final EmailClientService emailClientService;
     @Value("${app.serviceAddress}")
-    private final String serviceAddress;
+    private String serviceAddress;
 
     @Transactional
     public void sendLostPasswordLink(EmailObject email) {
