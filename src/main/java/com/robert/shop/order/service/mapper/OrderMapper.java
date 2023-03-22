@@ -9,6 +9,7 @@ import com.robert.shop.order.model.OrderRow;
 import com.robert.shop.common.model.OrderStatus;
 import com.robert.shop.order.model.Payment;
 import com.robert.shop.order.model.Shipment;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,16 +31,18 @@ public class OrderMapper {
                 .grossValue(calculateGrossValue(cart.getItems(), shipment))
                 .payment(payment)
                 .userId(userId)
+                .orderHash(RandomStringUtils.randomAlphanumeric(12))
                 .build();
     }
 
-    public static OrderSummary createOrderSummary(Payment payment, Order newOrder) {
+    public static OrderSummary createOrderSummary(Payment payment, Order newOrder, String redirectUrl) {
         return OrderSummary.builder()
                 .id(newOrder.getId())
                 .placeDate(newOrder.getPlaceDate())
                 .status(newOrder.getOrderStatus())
                 .grossValue(newOrder.getGrossValue())
                 .payment(payment)
+                .redirectUrl(redirectUrl)
                 .build();
     }
 

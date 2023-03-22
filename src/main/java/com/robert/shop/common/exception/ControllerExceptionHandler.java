@@ -43,6 +43,16 @@ public class ControllerExceptionHandler {
         );
     }
 
+    @ExceptionHandler(PaymentMethodP24Exception.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage paymentMethodP24Exception(PaymentMethodP24Exception ex, WebRequest request) {
+        return errorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                ex,
+                request
+        );
+    }
+
     private ErrorMessage errorMessage(int statusCode, RuntimeException ex, WebRequest request) {
         return new ErrorMessage(
                 statusCode,
