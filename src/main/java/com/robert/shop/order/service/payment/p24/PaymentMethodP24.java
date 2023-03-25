@@ -107,6 +107,7 @@ public class PaymentMethodP24 {
     }
 
     private String verifyPayment(NotificationReceiveDto receiveDto, Order order) {
+        log.info("Payment verification...");
         WebClient webClient = WebClient.builder()
                 .filter(ExchangeFilterFunctions.basicAuthentication(config.getPosId().toString(),
                         config.isTestMode() ? config.getTestSecretKey() : config.getSecretKey()))
