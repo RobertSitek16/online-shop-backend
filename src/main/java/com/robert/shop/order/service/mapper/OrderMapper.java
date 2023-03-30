@@ -2,11 +2,11 @@ package com.robert.shop.order.service.mapper;
 
 import com.robert.shop.common.model.Cart;
 import com.robert.shop.common.model.CartItem;
+import com.robert.shop.common.model.OrderStatus;
 import com.robert.shop.order.dto.OrderDto;
 import com.robert.shop.order.dto.OrderSummary;
 import com.robert.shop.order.model.Order;
 import com.robert.shop.order.model.OrderRow;
-import com.robert.shop.common.model.OrderStatus;
 import com.robert.shop.order.model.Payment;
 import com.robert.shop.order.model.Shipment;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -59,14 +59,14 @@ public class OrderMapper {
         return OrderRow.builder()
                 .quantity(cartItem.getQuantity())
                 .productId(cartItem.getProduct().getId())
-                .price(cartItem.getProduct().getPrice())
+                .price(cartItem.getProduct().getEndPrice())
                 .orderId(orderId)
                 .build();
     }
 
     private static BigDecimal calculateGrossValue(List<CartItem> items, Shipment shipment) {
         return items.stream()
-                .map(cartItem -> cartItem.getProduct().getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
+                .map(cartItem -> cartItem.getProduct().getEndPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO)
                 .add(shipment.getPrice());
