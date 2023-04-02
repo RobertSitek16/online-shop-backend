@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 @ResponseBody
@@ -15,50 +16,61 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage objectNotFoundException(ObjectNotFoundException ex, WebRequest request) {
+    public ErrorMessage objectNotFoundException(ObjectNotFoundException ex, HttpServletRequest request) {
         return errorMessage(
-                HttpStatus.NOT_FOUND.value(),
                 ex,
+                HttpStatus.NOT_FOUND,
                 request
         );
     }
 
     @ExceptionHandler(ObjectNotIdenticalException.class)
     @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-    public ErrorMessage objectNotIdenticalException(ObjectNotIdenticalException ex, WebRequest request) {
+    public ErrorMessage objectNotIdenticalException(ObjectNotIdenticalException ex, HttpServletRequest request) {
         return errorMessage(
-                HttpStatus.NOT_ACCEPTABLE.value(),
                 ex,
+                HttpStatus.NOT_ACCEPTABLE,
                 request
         );
     }
 
     @ExceptionHandler(LinkExpiredException.class)
     @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-    public ErrorMessage linkExpiredException(LinkExpiredException ex, WebRequest request) {
+    public ErrorMessage linkExpiredException(LinkExpiredException ex, HttpServletRequest request) {
         return errorMessage(
-                HttpStatus.NOT_ACCEPTABLE.value(),
                 ex,
+                HttpStatus.NOT_ACCEPTABLE,
                 request
         );
     }
 
     @ExceptionHandler(PaymentMethodP24Exception.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage paymentMethodP24Exception(PaymentMethodP24Exception ex, WebRequest request) {
+    public ErrorMessage paymentMethodP24Exception(PaymentMethodP24Exception ex, HttpServletRequest request) {
         return errorMessage(
-                HttpStatus.BAD_REQUEST.value(),
                 ex,
+                HttpStatus.BAD_REQUEST,
                 request
         );
     }
 
-    private ErrorMessage errorMessage(int statusCode, RuntimeException ex, WebRequest request) {
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorMessage noSuchElementException(NoSuchElementException ex, HttpServletRequest request) {
+        return errorMessage(
+                ex,
+                HttpStatus.NOT_FOUND,
+                request
+        );
+    }
+
+    private ErrorMessage errorMessage(RuntimeException ex, HttpStatus httpStatus, HttpServletRequest request) {
         return new ErrorMessage(
-                statusCode,
                 LocalDateTime.now(),
+                httpStatus.value(),
+                httpStatus.getReasonPhrase(),
                 ex.getMessage(),
-                request.getDescription(false)
+                request.getRequestURI()
         );
     }
 

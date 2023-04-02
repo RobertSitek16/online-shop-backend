@@ -10,7 +10,6 @@ import com.robert.shop.common.model.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CartMapper {
 
@@ -25,7 +24,7 @@ public class CartMapper {
     private static List<CartSummaryItemDto> mapCartItems(List<CartItem> items) {
         return items.stream()
                 .map(CartMapper::mapToCartItem)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static CartSummaryItemDto mapToCartItem(CartItem cartItem) {
