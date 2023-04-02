@@ -6,6 +6,7 @@ import com.robert.shop.admin.product.model.AdminProduct;
 import com.robert.shop.admin.product.service.AdminProductImageService;
 import com.robert.shop.admin.product.service.AdminProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +47,7 @@ public class AdminProductController {
     }
 
     @PutMapping("/admin/products/{id}")
+    @Cacheable(cacheNames = "productBySlug", key = "#adminProductDTO.slug")
     public AdminProduct updateProduct(@Valid @RequestBody AdminProductDTO adminProductDTO, @PathVariable Long id) {
         return adminProductService.updateProduct(mapAdminProduct(adminProductDTO, id));
     }
